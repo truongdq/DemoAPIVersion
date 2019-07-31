@@ -29,6 +29,10 @@ namespace DemoAPIVersion
             if (request.Headers.Contains(customHeaderForVersion))
             {
                 apiVersion = request.Headers.GetValues(customHeaderForVersion).FirstOrDefault();
+                if (!string.IsNullOrEmpty(apiVersion) && apiVersion.Contains(","))
+                {
+                    apiVersion = apiVersion.Split(',')[0];
+                }
             }
 
             if (apiVersion == "1")
