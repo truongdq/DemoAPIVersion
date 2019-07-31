@@ -25,14 +25,10 @@ namespace DemoAPIVersion
             var controllerName = routeData.Values["controller"].ToString();
             string apiVersion = "1";
             //Custom Header Name to be check
-            string customHeaderForVersion = "X-Employee-Version";
-            if (request.Headers.Contains(customHeaderForVersion))
+            var acceptHeader = request.Headers.Accept.Where(b => b.Parameters.Count(t => t.Name.ToLower() == "version") > 0);
+            if (acceptHeader.Any())
             {
-                apiVersion = request.Headers.GetValues(customHeaderForVersion).FirstOrDefault();
-                if (!string.IsNullOrEmpty(apiVersion) && apiVersion.Contains(","))
-                {
-                    apiVersion = apiVersion.Split(',')[0];
-                }
+                apiVersion = acceptHeader.First().Parameters.First(x => x.Name.ToLower() == "version").Value;
             }
 
             if (apiVersion == "1")
