@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dispatcher;
@@ -15,6 +14,7 @@ namespace DemoAPIVersion
             _config = config;
         }
 
+        //Web API Versioning using Custom Headers
         public override HttpControllerDescriptor SelectController(HttpRequestMessage request)
         {
             //returns all possible API Controllers
@@ -24,12 +24,13 @@ namespace DemoAPIVersion
             //get the controller name passed
             var controllerName = routeData.Values["controller"].ToString();
             string apiVersion = "1";
-            //get querystring from the URI
-            var versionQueryString = HttpUtility.ParseQueryString(request.RequestUri.Query);
-            if (versionQueryString["version"] != null)
+            //Custom Header Name to be check
+            string customHeaderForVersion = "X-Employee-Version";
+            if (request.Headers.Contains(customHeaderForVersion))
             {
-                apiVersion = Convert.ToString(versionQueryString["version"]);
+                apiVersion = request.Headers.GetValues(customHeaderForVersion).FirstOrDefault();
             }
+
             if (apiVersion == "1")
             {
                 controllerName = controllerName + "V1";
