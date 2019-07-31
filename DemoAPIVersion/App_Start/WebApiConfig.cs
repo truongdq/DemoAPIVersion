@@ -21,19 +21,19 @@ namespace DemoAPIVersion
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Routes.MapHttpRoute(
-                name: "EmpVersion1",
-                routeTemplate: "api/v1/employee/{id}",
-                defaults: new { controller = "EmployeeV1", id = RouteParameter.Optional }
-            );
+            //config.Routes.MapHttpRoute(
+            //    name: "EmpVersion1",
+            //    routeTemplate: "api/v1/employee/{id}",
+            //    defaults: new { controller = "EmployeeV1", id = RouteParameter.Optional }
+            //);
 
-            config.Routes.MapHttpRoute(
-                name: "EmpVersion2",
-                routeTemplate: "api/v2/employee/{id}",
-                defaults: new { controller = "EmployeeV2", id = RouteParameter.Optional }
-            );
+            //config.Routes.MapHttpRoute(
+            //    name: "EmpVersion2",
+            //    routeTemplate: "api/v2/employee/{id}",
+            //    defaults: new { controller = "EmployeeV2", id = RouteParameter.Optional }
+            //);
 
-            //config.Services.Replace(typeof(IHttpControllerSelector), new CustomSelectorController(config));
+            config.Services.Replace(typeof(IHttpControllerSelector), new CustomSelectorController(config));
         }
     }
 }
