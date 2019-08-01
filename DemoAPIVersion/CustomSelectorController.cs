@@ -24,7 +24,7 @@ namespace DemoAPIVersion
             //get the controller name passed
             var controllerName = routeData.Values["controller"].ToString();
             string apiVersion = "1";
-            //Custom Header Name to be check
+            //Accept Header Name to be check
             var acceptHeader = request.Headers.Accept.Where(b => b.Parameters.Count(t => t.Name.ToLower() == "version") > 0);
             if (acceptHeader.Any())
             {
